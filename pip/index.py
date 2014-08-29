@@ -801,7 +801,8 @@ class HTMLPage(object):
         except requests.HTTPError as exc:
             level = 2 if exc.response.status_code == 404 else 1
             cls._handle_fail(req, link, exc, url, level=level)
-        except (requests.ConnectionError, requests.packages.urllib3.exceptions.ProtocolError) as exc:
+        except (requests.ConnectionError,
+                requests.packages.urllib3.exceptions.ProtocolError) as exc:
             cls._handle_fail(
                 req, link, "connection error: %s" % exc, url,
             )
