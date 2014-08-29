@@ -14,6 +14,7 @@ Ashley Manton <ajd.manton@googlemail.com>
 Baptiste Mispelon <bmispelon@gmail.com>
 Ben Darnell <ben@bendarnell.com>
 Ben Rosser <rosser.bjr@gmail.com>
+Berker Peksag <berker.peksag@gmail.com>
 Bernardo B. Marques <bernardo.fire@gmail.com>
 Bradley Ayers <bradley.ayers@gmail.com>
 Brian Rosner <brosner@gmail.com>
@@ -65,6 +66,7 @@ Jonas Nockert <jonasnockert@gmail.com>
 Jorge Niedbalski <niedbalski@gmail.com>
 Josh Bronson <jabronson@gmail.com>
 Josh Hansen <josh@skwash.net>
+Josh Schneier <josh.schneier@gmail.com>
 Kamal Bin Mustafa <kamal@smach.net>
 Kelsey Hightower <kelsey.hightower@gmail.com>
 Kenneth Belitzky <kenny@belitzky.com>

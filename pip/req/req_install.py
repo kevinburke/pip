@@ -132,7 +132,7 @@ class InstallRequirement(object):
         # it's a local file, dir, or url
         if link:
 
-            url = link.url_without_fragment
+            url = link.url
             # Handle relative file URLs
             if link.scheme == 'file' and re.search(r'\.\./', url):
                 url = path_to_url(os.path.normpath(os.path.abspath(link.path)))
@@ -447,6 +447,10 @@ exec(compile(
             )
         p.feed(data or '')
         return p.close()
+
+    @property
+    def dependency_links(self):
+        return self.egg_info_lines('dependency_links.txt')
 
     _requirements_section_re = re.compile(r'\[(.*?)\]')
 
@@ -868,6 +872,8 @@ exec(compile(
                 r'^reading .*',
                 r"^removing .*\.egg-info' \(and everything under it\)$",
                 r'^byte-compiling ',
+                r'^SyntaxError:',
+                r'^SyntaxWarning:',
                 # Not sure what this warning is, but it seems harmless:
                 r"^warning: manifest_maker: standard file '-c' not found$"]:
             if re.search(regex, line.strip()):

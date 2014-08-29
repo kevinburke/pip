@@ -3,13 +3,11 @@ import shutil
 
 from pip._vendor import pkg_resources
 from pip.compat import HTTPError
-from pip.download import (url_to_path, unpack_vcs_link, is_vcs_url,
-                          is_file_url, unpack_file_url, unpack_http_url)
+from pip.download import (url_to_path, unpack_url)
 from pip.exceptions import (InstallationError, BestVersionAlreadyInstalled,
                             DistributionNotFound, PreviousBuildDirError)
 from pip.index import Link
-from pip.locations import (PIP_DELETE_MARKER_FILENAME, build_prefix,
-                           write_delete_marker_file)
+from pip.locations import (PIP_DELETE_MARKER_FILENAME, build_prefix)
 from pip.log import logger
 from pip.req.req_install import InstallRequirement
 from pip.util import (display_path, rmtree, dist_in_usersite, call_subprocess,
@@ -346,9 +344,9 @@ class RequirementSet(object):
                                 else:
                                     download_dir = self.download_dir
                                     do_download = self.is_download
-                                self.unpack_url(
+                                unpack_url(
                                     url, location, download_dir,
-                                    do_download,
+                                    do_download, session=self.session,
                                 )
                             except HTTPError as exc:
                                 logger.fatal(
@@ -425,6 +423,10 @@ class RequirementSet(object):
 
                 # sdists
                 else:
+                    # FIXME: shouldn't be globally added:
+                    finder.add_dependency_links(
+                        req_to_install.dependency_links
+                    )
                     if (req_to_install.extras):
                         logger.notify(
                             "Installing extra requirements: %r" %
@@ -499,36 +501,6 @@ class RequirementSet(object):
         shutil.copytree(req_to_install.source_dir, dest)
         call_subprocess(["python", "%s/setup.py" % dest, "clean"], cwd=dest,
                         command_desc='python setup.py clean')
-
-    def unpack_url(self, link, location, download_dir=None,
-                   only_download=False):
-        if download_dir is None:
-            download_dir = self.download_dir
-
-        # non-editable vcs urls
-        if is_vcs_url(link):
-            if only_download:
-                loc = download_dir
-            else:
-                loc = location
-            unpack_vcs_link(link, loc, only_download)
-
-        # file urls
-        elif is_file_url(link):
-            unpack_file_url(link, location, download_dir)
-            if only_download:
-                write_delete_marker_file(location)
-
-        # http urls
-        else:
-            unpack_http_url(
-                link,
-                location,
-                download_dir,
-                self.session,
-            )
-            if only_download:
-                write_delete_marker_file(location)
 
     def install(self, install_options, global_options=(), *args, **kwargs):
         """
