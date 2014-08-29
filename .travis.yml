@@ -22,16 +22,3 @@ install:
 
 script: tox
 
-branches:
-  only:
-    - develop
-    - 1.3.X
-    - 1.4.X
-    - 1.5.X
-
-notifications:
-  irc:
-    channels:
-      - "irc.freenode.org#pypa-dev"
-    use_notice: true
-    skip_join: true
