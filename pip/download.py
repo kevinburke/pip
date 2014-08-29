@@ -22,8 +22,7 @@ from pip.log import logger
 from pip._vendor import requests, six
 from pip._vendor.requests.adapters import BaseAdapter
 from pip._vendor.requests.auth import AuthBase, HTTPBasicAuth
-from pip._vendor.requests.compat import IncompleteRead
-from pip._vendor.requests.exceptions import InvalidURL, ChunkedEncodingError
+from pip._vendor.requests.exceptions import InvalidURL
 from pip._vendor.requests.models import Response
 from pip._vendor.requests.structures import CaseInsensitiveDict
 
@@ -416,12 +415,8 @@ def _download_url(resp, link, temp_location):
         def resp_read(chunk_size):
             try:
                 # Special case for urllib3.
-                try:
-                    for chunk in resp.raw.stream(
-                            chunk_size, decode_content=False):
-                        yield chunk
-                except IncompleteRead as e:
-                    raise ChunkedEncodingError(e)
+                for chunk in resp.raw.stream(chunk_size, decode_content=False):
+                    yield chunk
             except AttributeError:
                 # Standard file-like object.
                 while True:
