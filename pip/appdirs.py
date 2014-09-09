@@ -6,6 +6,7 @@ import os
 import sys
 
 from pip._vendor import six
+from pip.compat import WINDOWS
 
 
 def user_cache_dir(appname):
@@ -29,7 +30,7 @@ def user_cache_dir(appname):
 
     OPINION: This function appends "Cache" to the `CSIDL_LOCAL_APPDATA` value.
     """
-    if sys.platform == "win32":
+    if WINDOWS:
         # Get the base path
         path = os.path.normpath(_get_win_folder("CSIDL_LOCAL_APPDATA"))
 
@@ -69,7 +70,7 @@ def site_config_dirs(appname):
         Win 7:      Hidden, but writeable on Win 7:
                     C:\ProgramData\<AppName>\
     """
-    if sys.platform == "win32":
+    if WINDOWS:
         path = os.path.normpath(_get_win_folder("CSIDL_COMMON_APPDATA"))
         pathlist = [os.path.join(path, appname)]
     elif sys.platform == 'darwin':
@@ -166,7 +167,7 @@ def _get_win_folder_with_ctypes(csidl_name):
 
     return buf.value
 
-if sys.platform == "win32":
+if WINDOWS:
     try:
         import win32com.shell  # noqa
         _get_win_folder = _get_win_folder_with_pywin32
