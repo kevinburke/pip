@@ -319,19 +319,22 @@ class InstallCommand(Command):
                         requirement_set.successfully_installed
                     ])
                     if installed:
-                        logger.notify('Successfully installed %s' % installed)
+                        logger.info('Successfully installed %s' % installed)
                 else:
                     downloaded = ' '.join([
                         req.name
                         for req in requirement_set.successfully_downloaded
                     ])
                     if downloaded:
-                        logger.notify(
+                        logger.info(
                             'Successfully downloaded %s' % downloaded
                         )
             except PreviousBuildDirError:
                 options.no_clean = True
                 raise
+            except Exception as e:
+                logger.info("caught previously uncaught exception")
+                logger.warn(e)
             finally:
                 # Clean up
                 if ((not options.no_clean)
