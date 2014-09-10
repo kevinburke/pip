@@ -355,5 +355,5 @@ class InstallCommand(Command):
                 logger.info("removing tree")
                 shutil.rmtree(temp_target_dir)
             logger.info("returning requirement set")
-            logger.info(requirement_set)
+            logger.info(str(requirement_set))
             return requirement_set
