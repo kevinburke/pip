@@ -16,7 +16,6 @@ import os.path
 try:
     from certifi import where
 except ImportError:
-    raise AssertionError("certifi import failed")
     def where():
         """Return the preferred certificate bundle."""
         # vendored bundle inside Requests
