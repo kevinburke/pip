@@ -238,6 +238,8 @@ class Tests_UserSite:
         result3 = script.pip('install', '--user', 'INITools==0.1', '--verbose',
                              debug=True)
 
+        raise AssertionError("foo bar")
+
         # usersite has 0.1
         egg_info_folder = (
             script.user_site / 'INITools-0.1-py%s.egg-info' % pyversion
