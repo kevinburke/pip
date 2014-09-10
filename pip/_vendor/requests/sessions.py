@@ -135,7 +135,7 @@ class SessionRedirectMixin(object):
 
             prepared_request.url = to_native_string(url)
             # cache the url
-            if resp.is_permanent_redirect:
+            if resp.is_permanent_redirect and req.url != prepared_request.url:
                 self.redirect_cache[req.url] = prepared_request.url
 
             # http://tools.ietf.org/html/rfc7231#section-6.4.4
