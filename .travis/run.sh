@@ -16,7 +16,7 @@ case $TOXENV in
         tox -- -m integration
         ;;
     *)
-        tox -- -m integration -n 8
+        tox -- -m integration
         ;;
 esac
 
