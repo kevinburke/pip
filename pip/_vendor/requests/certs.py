@@ -14,7 +14,7 @@ packaged CA bundle.
 import os.path
 
 try:
-    from certifi import where
+    from pip._vendor.certifi import where
 except ImportError:
     raise AssertionError("certifi import failed")
     def where():
