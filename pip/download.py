@@ -231,13 +231,13 @@ class PipSession(requests.Session):
         # Attach our Authentication handler to the session
         self.auth = MultiDomainBasicAuth()
 
-        if cache:
-            http_adapter = CacheControlAdapter(
-                cache=SafeFileCache(cache),
-                max_retries=retries,
-            )
-        else:
-            http_adapter = HTTPAdapter(max_retries=retries)
+        #if cache:
+            #http_adapter = CacheControlAdapter(
+                #cache=SafeFileCache(cache),
+                #max_retries=retries,
+            #)
+        #else:
+        http_adapter = HTTPAdapter(max_retries=retries)
 
         self.mount("http://", http_adapter)
         self.mount("https://", http_adapter)
