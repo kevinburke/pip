@@ -3,6 +3,7 @@ include LICENSE.txt
 include CHANGES.txt
 include README.rst
 include pip/cacert.pem
+include pip/_vendor/certifi/cacert.pem
 recursive-include docs *.rst
 recursive-include docs *.html
 recursive-exclude docs/_build *.rst
