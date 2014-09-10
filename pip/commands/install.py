@@ -339,6 +339,7 @@ class InstallCommand(Command):
                              or options.download_dir)):
                     requirement_set.cleanup_files()
 
+            logger.info("checking target directory")
             if options.target_dir:
                 if not os.path.exists(options.target_dir):
                     os.makedirs(options.target_dir)
@@ -348,5 +349,8 @@ class InstallCommand(Command):
                         os.path.join(lib_dir, item),
                         os.path.join(options.target_dir, item),
                     )
+                logger.info("removing tree")
                 shutil.rmtree(temp_target_dir)
+            logger.info("returning requirement set")
+            logger.info(requirement_set)
             return requirement_set
