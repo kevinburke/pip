@@ -485,6 +485,7 @@ class RequirementSet(object):
                 rmtree(dir)
 
         logger.indent -= 2
+        logger.notify("Done cleaning up.")
 
     def _pip_has_created_build_dir(self):
         return (
