@@ -22,8 +22,6 @@ from pip.status_codes import (
 from pip.util import get_prog, normalize_path
 
 
-import gc; gc.set_debug(gc.DEBUG_UNCOLLECTABLE)
-
 __all__ = ['Command']
 
 
