@@ -134,8 +134,8 @@ class SessionRedirectMixin(object):
                 url = requote_uri(url)
 
             prepared_request.url = to_native_string(url)
-            # Cache the url, unless it redirects to itself.
-            if resp.is_permanent_redirect and req.url != prepared_request.url:
+            # cache the url
+            if resp.is_permanent_redirect:
                 self.redirect_cache[req.url] = prepared_request.url
 
             # http://tools.ietf.org/html/rfc7231#section-6.4.4
@@ -400,16 +400,13 @@ class Session(SessionRedirectMixin):
             :class:`Request`.
         :param cookies: (optional) Dict or CookieJar object to send with the
             :class:`Request`.
-        :param files: (optional) Dictionary of ``'filename': file-like-objects``
+        :param files: (optional) Dictionary of 'filename': file-like-objects
             for multipart encoding upload.
         :param auth: (optional) Auth tuple or callable to enable
             Basic/Digest/Custom HTTP Auth.
-        :param timeout: (optional) How long to wait for the server to send
-            data before giving up, as a float, or a (`connect timeout, read
-            timeout <user/advanced.html#timeouts>`_) tuple.
-        :type timeout: float or tuple
-        :param allow_redirects: (optional) Set to True by default.
-        :type allow_redirects: bool
+        :param timeout: (optional) Float describing the timeout of the
+            request in seconds.
+        :param allow_redirects: (optional) Boolean. Set to True by default.
         :param proxies: (optional) Dictionary mapping protocol to the URL of
             the proxy.
         :param stream: (optional) whether to immediately download the response
