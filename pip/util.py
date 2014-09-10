@@ -666,7 +666,7 @@ def remove_tracebacks(output):
 def call_subprocess(cmd, show_stdout=True,
                     filter_stdout=None, cwd=None,
                     raise_on_returncode=True,
-                    command_level=logger.DEBUG, command_desc=None,
+                    command_level=logger.INFO, command_desc=None,
                     extra_environ=None):
     if command_desc is None:
         cmd_parts = []
@@ -717,10 +717,10 @@ def call_subprocess(cmd, show_stdout=True,
     if proc.returncode:
         if raise_on_returncode:
             if all_output:
-                logger.notify(
+                logger.info(
                     'Complete output from command %s:' % command_desc
                 )
-                logger.notify(
+                logger.info(
                     '\n'.join(all_output) +
                     '\n----------------------------------------'
                 )
