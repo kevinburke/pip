@@ -186,6 +186,7 @@ class InstallCommand(Command):
 
     def run(self, options, args):
 
+        import gc; gc.set_debug(gc.DEBUG_UNCOLLECTABLE)
         if (
             options.no_install or
             options.no_download or
