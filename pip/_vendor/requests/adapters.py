@@ -10,6 +10,7 @@ and maintain connections.
 
 import socket
 
+from .packages.urllib3.exceptions import ProtocolError
 from .models import Response
 from .packages.urllib3 import Retry
 from .packages.urllib3.poolmanager import PoolManager, proxy_from_url
@@ -400,7 +401,7 @@ class HTTPAdapter(BaseAdapter):
                     # All is well, return the connection to the pool.
                     conn._put_conn(low_conn)
 
-        except socket.error as sockerr:
+        except (ProtocolError, socket.error) as sockerr:
             raise ConnectionError(sockerr, request=request)
 
         except MaxRetryError as e:
