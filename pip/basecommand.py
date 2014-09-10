@@ -164,7 +164,7 @@ class Command(object):
             exit = ERROR
         except KeyboardInterrupt:
             logger.fatal('Operation cancelled by user')
-            logger.info('Exception information:\n%s' % format_exc())
+            logger.fatal('Exception information:\n%s' % format_exc())
             store_log = True
             exit = ERROR
         except:
