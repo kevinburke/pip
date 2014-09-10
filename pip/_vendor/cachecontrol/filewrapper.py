@@ -1,3 +1,4 @@
+import weakref
 from io import BytesIO
 
 from .compat import is_fp_closed
@@ -18,7 +19,7 @@ class CallbackFileWrapper(object):
     def __init__(self, fp, callback):
         self.__buf = BytesIO()
         self.__fp = fp
-        self.__callback = callback
+        self.__callback = weakref.ref(callback)
 
     def __getattr__(self, name):
         return getattr(self.__fp, name)
@@ -30,13 +31,8 @@ class CallbackFileWrapper(object):
         # Is this the best way to figure out if the file has been completely
         #   consumed?
         if is_fp_closed(self.__fp):
-            self.__callback(self.__buf.getvalue())
-
-            # We assign this to None here, because otherwise we can get into
-            # really tricky problems where the CPython interpreter dead locks
-            # because the callback is holding a reference to something which
-            # has a __del__ method. Setting this to None breaks the cycle
-            # and allows the garbage collector to do it's thing normally.
-            self.__callback = None
+            cb = self.__callback()
+            if cb is not None:
+                cb(self.__buf.getvalue())
 
         return data
