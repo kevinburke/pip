@@ -14,10 +14,3 @@ env:
 install: .travis/install.sh
 
 script: .travis/run.sh
-
-notifications:
-  irc:
-    channels:
-      - "irc.freenode.org#pypa-dev"
-    use_notice: true
-    skip_join: true
