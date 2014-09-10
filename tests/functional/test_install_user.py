@@ -235,7 +235,8 @@ class Tests_UserSite:
         script.pip('install', '--user', 'INITools==0.3')
 
         script.verbose = True
-        result3 = script.pip('install', '--user', 'INITools==0.1', '--verbose')
+        result3 = script.pip('install', '--user', 'INITools==0.1', '--verbose',
+                             debug=True)
 
         # usersite has 0.1
         egg_info_folder = (
